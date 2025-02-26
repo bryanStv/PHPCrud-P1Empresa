@@ -1,7 +1,5 @@
 <?php
 
-//echo "Hola Mundo";
-
 header('Content-Type: application/json');
 
 header("Access-Control-Allow-Origin: *"); // Permitir cualquier origen (ajusta según sea necesario)
