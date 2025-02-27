@@ -20,14 +20,16 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (isset($data['nombre'], $data['apellido'], $data['correo'], $data['telefono'], $data['direccion'])) {
+if (isset($data['id'],$data['nombre'], $data['apellido'], $data['correo'], $data['telefono'], $data['direccion'])) {
+    $id = (int)$data['id'];
+    $direccion = (string)$data['direccion'];
     $stmt = $conn->prepare("UPDATE Alumnos SET nombre = ?, apellido = ?, correo = ?, telefono = ?, direccion = ? WHERE id = ?");
     
     if ($stmt === false) {
         die(json_encode(["error" => "Error en la consulta: " . $conn->error]));
     }
 
-    $stmt->bind_param("sssssi", $data['nombre'], $data['apellido'], $data['correo'], $data['telefono'], $data['direccion'],$data['id']);
+    $stmt->bind_param("sssssi", $data['nombre'], $data['apellido'], $data['correo'], $data['telefono'], $direccion,$id);
 
     if ($stmt->execute()) {
         echo json_encode(["mensaje" => "Alumno Actualizado"]);
